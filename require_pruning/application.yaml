@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: require-pruning
+spec:
+  destination:
+    namespace: require-pruning
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: require_pruning/manifests
+    repoURL: https://github.com/pddg/argocd-playground
+    targetRevision: main
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
